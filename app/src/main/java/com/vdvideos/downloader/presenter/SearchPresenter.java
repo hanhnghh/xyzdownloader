@@ -55,7 +55,7 @@ public class SearchPresenter {
         requestPhotos(text, page, false);
     }
 
-    public void requestPhotos(String query, int page, boolean isFirst){
+    public void requestPhotos(String query, int page, final boolean isFirst){
         final int newPage = isFirst ? 1 : page + 1;
         searchModel.searchVideos(query, newPage)
                 .subscribeOn(Schedulers.io())
@@ -63,28 +63,26 @@ public class SearchPresenter {
                 .subscribe(new Observer<SearchVideoEntity>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.d("han.hanh", "SearchPresenter: onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull SearchVideoEntity searchVideoEntityList) {
-                        Log.d("han.hanh", "SearchPresenter: onNext");
-                        searchView.hideLoadingView();
+                        if(isFirst) {
+                            searchView.hideLoadingView();
+                            searchView.clearList();
+                        }
                         searchView.setVideoPage(newPage);
-                        for(VideoEntity entity : searchVideoEntityList.videoList){
+                        for(VideoEntity entity : searchVideoEntityList.list){
                             searchView.insertItem(entity);
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("han.hanh", "SearchPresenter: onError");
-                        Log.d("han.hanh", " " + e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d("han.hanh", "SearchPresenter: onComplete");
                     }
                 });
     }

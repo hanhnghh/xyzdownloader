@@ -55,6 +55,11 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    public void clearList(){
+        videoList.clear();
+        notifyDataSetChanged();
+    }
+
     public int getRealItemCount(){
         return videoList.size();
     }
@@ -115,7 +120,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             searchView.loadThumbnailImage(thumbnailImage, videoList.get(position).thumbnail_url);
             videoTitle.setText(videoList.get(position).title);
             videoOwner.setText(videoList.get(position).owner);
-            videoViewCount.setText(videoList.get(position).viewCount);
+            videoViewCount.setText(videoList.get(position).view_total);
         }
     }
 

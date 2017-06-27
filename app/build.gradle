@@ -51,6 +51,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     //Admob
     compile 'com.google.android.gms:play-services-ads:11.0.0'
     //circular progress view

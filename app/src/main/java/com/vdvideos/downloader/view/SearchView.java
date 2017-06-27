@@ -14,4 +14,5 @@ public interface SearchView {
     void setVideoPage(int page);
     void insertItem(VideoEntity entity);
     void loadThumbnailImage(ImageView view, String url);
+    void clearList();
 }

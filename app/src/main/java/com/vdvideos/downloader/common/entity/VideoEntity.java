@@ -6,9 +6,9 @@ package com.vdvideos.downloader.common.entity;
 
 public class VideoEntity {
 
-    public String id;
     public String title;
     public String thumbnail_url;
-    public String viewCount;
     public String owner;
+    public String view_total;
+
 }

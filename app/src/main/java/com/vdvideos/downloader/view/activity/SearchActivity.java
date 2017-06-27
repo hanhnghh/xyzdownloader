@@ -1,10 +1,12 @@
 package com.vdvideos.downloader.view.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -53,7 +55,7 @@ public class SearchActivity extends BaseActivity implements SearchView{
                 showDownloadDialog();
             }
         });
-
+        adapter.setView(this);
         videoRecylerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         videoRecylerView.addOnScrollListener(scrollListener);
     }
@@ -64,6 +66,7 @@ public class SearchActivity extends BaseActivity implements SearchView{
         if(!text.equals("")) {
             queryText = text;
             searchPresenter.searchVideo(queryText, adapter.getPageCount());
+            hideKeyboard();
         }
     }
 
@@ -85,6 +88,16 @@ public class SearchActivity extends BaseActivity implements SearchView{
     @Override
     public void insertItem(VideoEntity entity) {
         adapter.insertVideoEntity(entity);
+    }
+
+    @Override
+    public void clearList() {
+        adapter.clearList();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager manager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {

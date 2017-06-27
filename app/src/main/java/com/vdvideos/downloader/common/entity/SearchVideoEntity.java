@@ -14,5 +14,5 @@ public class SearchVideoEntity {
     public int total;
     public boolean has_more;
 
-    public List<VideoEntity> videoList;
+    public List<VideoEntity> list;
 }

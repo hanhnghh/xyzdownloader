@@ -17,5 +17,5 @@ public interface SearchApi {
     Observable<SearchVideoEntity> searchVideos(@Query("search") String query,
                                                @Query("page") int page,
                                                @Query("limit") int per_page,
-                                               @Query("field") String fieldResponse);
+                                               @Query("fields") String fieldResponse);
 }
