@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.vdvideos.downloader.MyApplication;
 import com.vdvideos.downloader.R;
@@ -131,7 +132,11 @@ public class SearchActivity extends BaseActivity implements SearchView{
     }
 
     public void showDownloadDialog(){
-
+        new MaterialDialog.Builder(this)
+                .title(R.string.progress_dialog)
+                .content(R.string.please_wait)
+                .progress(true, 0)
+                .show();
     }
 }
 

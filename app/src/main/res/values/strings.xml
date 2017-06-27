@@ -14,4 +14,7 @@
     <string name="action_ok">Ok</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_later">Later</string>
+
+    <string name="progress_dialog">Downloading</string>
+    <string name="please_wait">Please wait</string>
 </resources>

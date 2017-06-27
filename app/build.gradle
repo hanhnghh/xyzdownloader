@@ -60,4 +60,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     //EditText
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    //afollestad dialog
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
 }
