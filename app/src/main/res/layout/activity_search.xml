@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:met="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/search_bar"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/search_box"
+            android:layout_weight="1"
+            android:hint="@string/hint_search_text"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:layout_marginRight="5dp"
+            android:imeOptions="actionSearch"
+            met:met_textColor="@color/colorTextBlack"
+            met:met_textColorHint="@color/colorTextGrey"
+            met:met_baseColor="@color/colorAccent"/>
+
+        <ImageButton
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:id="@+id/search_btn"
+            android:src="@mipmap/ic_search_white_24dp"
+            android:background="@drawable/btn_shape"
+            android:layout_marginRight="5dp"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/videos_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_below="@+id/search_bar"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

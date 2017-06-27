@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Tube Video Downloader</string>
+    <string name="loading_splash">Loading</string>
+    <string name="hint_search_text">Enter Title/Artist/Song name</string>
+
+    <string name="interstitial_id_key">interstitial_id_1</string>
+    <string name="native_id_key">native_id_2</string>
+    <string name="banner_id_key">banner_id_3</string>
+    <string name="intro_key">intro_content</string>
+    <string name="browser_btn_key">browser_btn</string>
+    <string name="yt_key">yt</string>
+    <string name="country_key">country_code</string>
+
+    <string name="action_ok">Ok</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_later">Later</string>
+</resources>
