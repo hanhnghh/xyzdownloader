@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.InterstitialAd;
 import com.vdvideos.downloader.common.entity.SearchVideoEntity;
 import com.vdvideos.downloader.common.entity.VideoEntity;
+import com.vdvideos.downloader.model.AdsModel;
 import com.vdvideos.downloader.model.ImageModel;
 import com.vdvideos.downloader.model.SearchModel;
 import com.vdvideos.downloader.view.SearchView;
@@ -29,9 +31,12 @@ public class SearchPresenter {
 
     private SearchView searchView;
     private Context context;
+    private Boolean hasMore;
+    private Boolean isLoading;
 
     @Inject SearchModel searchModel;
     @Inject ImageModel imageModel;
+    @Inject AdsModel adsModel;
 
     @Inject
     public SearchPresenter(Context context){
@@ -42,17 +47,27 @@ public class SearchPresenter {
         searchView = view;
     }
 
-    public void searchVideo(String text, int page){
-        requestPhotos(text, page, true);
-        searchView.showLoadingView();
+    public void setCanLoadMore(boolean hasMore){
+        this.hasMore = hasMore;
+    }
+
+    public void setLoading(boolean loading){
+        isLoading = loading;
     }
 
     public boolean canLoadMore(){
-        return true;
+        return !isLoading && hasMore;
+    }
+
+    public void searchVideo(String text, int page){
+        requestPhotos(text, page, true);
+        searchView.showLoadingView();
+        setLoading(true);
     }
 
     public void loadMore(String text, int page){
         requestPhotos(text, page, false);
+        setLoading(true);
     }
 
     public void requestPhotos(String query, int page, final boolean isFirst){
@@ -71,6 +86,8 @@ public class SearchPresenter {
                             searchView.hideLoadingView();
                             searchView.clearList();
                         }
+                        setLoading(false);
+                        setCanLoadMore(searchVideoEntityList.has_more);
                         searchView.setVideoPage(newPage);
                         for(VideoEntity entity : searchVideoEntityList.list){
                             searchView.insertItem(entity);
@@ -89,5 +106,17 @@ public class SearchPresenter {
 
     public void loadThumbnailImage(ImageView view, String url){
            imageModel.loadThumbnailImage(view, url);
+    }
+
+    public void loadInterstitialAds(String adsId){
+        OnRequestAdsListener listener = new OnRequestAdsListener();
+        adsModel.loadInterstitialAds(adsId, listener);
+    }
+
+    private class OnRequestAdsListener implements AdsModel.OnRequestAdsListener{
+        @Override
+        public void onRequestAdsSuccessful(InterstitialAd interstitialAd) {
+            searchView.setInterstitialAd(interstitialAd);
+        }
     }
 }

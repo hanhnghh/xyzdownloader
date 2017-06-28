@@ -1,16 +1,19 @@
 package com.vdvideos.downloader.view.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.ads.InterstitialAd;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.vdvideos.downloader.MyApplication;
 import com.vdvideos.downloader.R;
@@ -32,11 +35,13 @@ import butterknife.OnClick;
 public class SearchActivity extends BaseActivity implements SearchView{
 
     @Inject SearchPresenter searchPresenter;
+    @Inject SharedPreferences sharedPreferences;
     @Inject VideoAdapter adapter;
     @BindView(R.id.search_box) MaterialEditText searchBox;
     @BindView(R.id.search_btn) ImageButton searchBtn;
     @BindView(R.id.videos_recyclerView) RecyclerView videoRecylerView;
     private String queryText;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -46,6 +51,12 @@ public class SearchActivity extends BaseActivity implements SearchView{
         ButterKnife.bind(this);
         searchPresenter.setView(this);
         initView();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        loadInterstitialAds(sharedPreferences.getString(getString(R.string.interstitial_id_key), ""));
     }
 
     private void initView(){
@@ -69,6 +80,10 @@ public class SearchActivity extends BaseActivity implements SearchView{
             searchPresenter.searchVideo(queryText, adapter.getPageCount());
             hideKeyboard();
         }
+
+        if(mInterstitialAd != null && mInterstitialAd.isLoaded())
+            mInterstitialAd.show();
+        loadInterstitialAds(sharedPreferences.getString(getString(R.string.interstitial_id_key), ""));
     }
 
     @Override
@@ -112,17 +127,6 @@ public class SearchActivity extends BaseActivity implements SearchView{
                     && lastVisibleItem >= totalItemCount - 10 && totalItemCount > 0 && dy > 0) {
                 searchPresenter.loadMore(queryText, adapter.getPageCount());
             }
-            if (!ViewCompat.canScrollVertically(recyclerView, -1)) {
-                //TODO
-                //scrollPresenter.setToTop(true);
-            } else {
-                //TODO
-                //scrollPresenter.setToTop(false);
-            }
-            //TODO
-            /*if (!ViewCompat.canScrollVertically(recyclerView, 1) && searchPresenter.isLoading()) {
-                refreshLayout.setLoading(true);
-            }*/
         }
     };
 
@@ -137,6 +141,15 @@ public class SearchActivity extends BaseActivity implements SearchView{
                 .content(R.string.please_wait)
                 .progress(true, 0)
                 .show();
+    }
+
+    private void loadInterstitialAds(String adsId){
+        searchPresenter.loadInterstitialAds(adsId);
+    }
+
+    @Override
+    public void setInterstitialAd(InterstitialAd interstitialAd) {
+        this.mInterstitialAd = interstitialAd;
     }
 }
 

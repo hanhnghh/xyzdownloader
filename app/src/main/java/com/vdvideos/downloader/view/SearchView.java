@@ -2,6 +2,7 @@ package com.vdvideos.downloader.view;
 
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.InterstitialAd;
 import com.vdvideos.downloader.common.entity.VideoEntity;
 
 /**
@@ -15,4 +16,5 @@ public interface SearchView {
     void insertItem(VideoEntity entity);
     void loadThumbnailImage(ImageView view, String url);
     void clearList();
+    void setInterstitialAd(InterstitialAd interstitialAd);
 }
