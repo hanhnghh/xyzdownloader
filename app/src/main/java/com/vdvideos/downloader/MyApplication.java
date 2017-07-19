@@ -1,6 +1,9 @@
 package com.vdvideos.downloader;
 
 import android.app.Application;
+import android.content.Intent;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
@@ -64,11 +67,10 @@ public class MyApplication extends Application {
             if (actionType == OSNotificationAction.ActionType.ActionTaken)
                 Log.i("OneSignalExample", "Button pressed with id: " + result.action.actionID);
 
-            // The following can be used to open an Activity of your choice.
-            // Replace - getApplicationContext() - with any Android Context.
-            // Intent intent = new Intent(getApplicationContext(), YourActivity.class);
-            // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-            // startActivity(intent);
+            String url = (PreferenceManager.getDefaultSharedPreferences(MyApplication.this)).getString(getString(R.string.update_link_key), "");
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
             // Add the following to your AndroidManifest.xml to prevent the launching of your main Activity
             //   if you are calling startActivity above.

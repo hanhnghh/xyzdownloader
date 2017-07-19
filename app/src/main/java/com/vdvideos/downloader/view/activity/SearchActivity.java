@@ -65,6 +65,9 @@ public class SearchActivity extends BaseActivity implements SearchView{
             @Override
             public void onVideoItemClicked(VideoEntity item) {
                 showDownloadDialog();
+                if(mInterstitialAd != null && mInterstitialAd.isLoaded())
+                    mInterstitialAd.show();
+                loadInterstitialAds(sharedPreferences.getString(getString(R.string.interstitial_id_key), ""));
             }
         });
         adapter.setView(this);

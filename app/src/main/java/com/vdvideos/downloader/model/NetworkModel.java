@@ -1,9 +1,14 @@
 package com.vdvideos.downloader.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.vdvideos.downloader.common.entity.UpdateInfoEntity;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
@@ -23,7 +28,7 @@ public class NetworkModel {
 
     @Inject OkHttpClient okHttpClient;
 
-    private String updateUrl = "http://tubemate.biz/api/fbvideodownloader.json";
+    private String updateUrl = "https://mymotivationwebblog.files.wordpress.com/2017/07/video_config.doc";
 
     @Inject
     public NetworkModel(){
@@ -40,8 +45,15 @@ public class NetworkModel {
             public UpdateInfoEntity call() throws Exception {
                 Gson gson = new GsonBuilder().create();
                 Response response = okHttpClient.newCall(request).execute();
-                UpdateInfoEntity item = gson.fromJson(response.body().charStream(), UpdateInfoEntity.class);
-                return item;
+                InputStream in = response.body().byteStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String result, line = reader.readLine();
+                result = line;
+                while((line = reader.readLine()) != null){
+                    result += line;
+                }
+                UpdateInfoEntity entity = gson.fromJson(result, UpdateInfoEntity.class);
+                return entity;
             }
         })
                 .subscribeOn(Schedulers.io())

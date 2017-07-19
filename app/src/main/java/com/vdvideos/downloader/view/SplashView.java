@@ -14,4 +14,6 @@ public interface SplashView {
     void showUpdateDialog(UpdateInfoEntity entity);
 
     void loadInterstitialAd(InterstitialAd interstitialAd);
+
+    void showSearchActivity();
 }

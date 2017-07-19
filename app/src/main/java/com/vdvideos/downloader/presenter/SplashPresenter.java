@@ -1,5 +1,7 @@
 package com.vdvideos.downloader.presenter;
 
+import android.util.Log;
+
 import com.google.android.gms.ads.InterstitialAd;
 import com.vdvideos.downloader.common.entity.UpdateInfoEntity;
 import com.vdvideos.downloader.model.AdsModel;
@@ -49,7 +51,7 @@ public class SplashPresenter {
 
             @Override
             public void onError(@NonNull Throwable e) {
-
+                splashView.showSearchActivity();
             }
 
             @Override
